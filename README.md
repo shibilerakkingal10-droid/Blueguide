@@ -1,3 +1,5 @@
+**BLUEGUIDE**
+
 Many fishermen go far into the sea where there is no internet
 connection. Because of this, they cannot use online apps or search
 for important information while fishing. At the same time, traditional
