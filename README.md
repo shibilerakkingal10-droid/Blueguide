@@ -1,2 +1,2 @@
-# ThinkIT
+# Blueguide
 hackathon project 
