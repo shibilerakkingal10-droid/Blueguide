@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import '../models/knowledge_entry.dart';
 
@@ -25,7 +26,7 @@ class KnowledgeService {
           chatbotData.map((json) => KnowledgeEntry.fromJson(json)).toList();
       _isLoaded = true;
     } catch (e) {
-      print('Error loading knowledge base: $e');
+      debugPrint('Error loading knowledge base: $e');
       _knowledgeBase = [];
     }
   }
@@ -45,8 +46,8 @@ class KnowledgeService {
     final normalizedQuery = userQuery.toLowerCase().trim();
     final queryWords = normalizedQuery.split(' ');
 
-    // Score each entry
-    final List<Map<String, dynamic>> scoredEntries = [];
+    // Score each entry using a typed class for better performance
+    final List<_ScoredEntry> scoredEntries = [];
 
     for (final entry in _knowledgeBase) {
       int score = 0;
@@ -85,20 +86,17 @@ class KnowledgeService {
       }
 
       if (score > 0) {
-        scoredEntries.add({
-          'entry': entry,
-          'score': score,
-        });
+        scoredEntries.add(_ScoredEntry(entry, score));
       }
     }
 
     // Sort by score (highest first)
-    scoredEntries.sort((a, b) => (b['score'] as int).compareTo(a['score'] as int));
+    scoredEntries.sort((a, b) => b.score.compareTo(a.score));
 
     // Return top 3 entries
     final topEntries = scoredEntries
         .take(3)
-        .map((item) => item['entry'] as KnowledgeEntry)
+        .map((item) => item.entry)
         .toList();
 
     return topEntries;
@@ -109,4 +107,12 @@ class KnowledgeService {
 
   /// Check if knowledge base is loaded
   bool get isLoaded => _isLoaded;
+}
+
+/// Internal class for storing scored entries
+class _ScoredEntry {
+  final KnowledgeEntry entry;
+  final int score;
+
+  _ScoredEntry(this.entry, this.score);
 }

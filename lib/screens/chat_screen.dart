@@ -163,9 +163,9 @@ class ChatMessage extends StatelessWidget {
           if (!isUser)
             Container(
               margin: const EdgeInsets.only(right: 8.0),
-              child: CircleAvatar(
+              child: const CircleAvatar(
                 backgroundColor: Colors.blue,
-                child: const Icon(Icons.assistant, color: Colors.white),
+                child: Icon(Icons.assistant, color: Colors.white),
               ),
             ),
           Flexible(
@@ -184,9 +184,9 @@ class ChatMessage extends StatelessWidget {
           if (isUser)
             Container(
               margin: const EdgeInsets.only(left: 8.0),
-              child: CircleAvatar(
+              child: const CircleAvatar(
                 backgroundColor: Colors.blue,
-                child: const Icon(Icons.person, color: Colors.white),
+                child: Icon(Icons.person, color: Colors.white),
               ),
             ),
         ],
